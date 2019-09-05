@@ -1,5 +1,9 @@
 <ul>
   {{#each books}}
-  <li>{{this.title}} ---> {{this.rating}} <a href="/books/edit?book_id={{this._id}}" class="edit-button">EDIT</a> </li>
+  <li>{{this.title}} ---> {{this.rating}}
+    <a href="/book/{{this._id}}" class="details-button">Details</a>
+    <a href="/books/edit?book_id={{this._id}}" class="edit-button">EDIT</a>
+    <a href="/books/delete?book_id={{this._id}}" class="delete-button">DELETE</a>
+  </li>
   {{/each}}
 </ul>

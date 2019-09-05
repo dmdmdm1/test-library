@@ -17,17 +17,15 @@ router.get('/', function (req, res, next) {
 
 // POST /books
 router.post('/', function (req, res, next) {
-  req.body.title
-  req.body.description
-  req.body.author
-  req.body.rating
+  console.log("i am root")
+  const { title, author, description, rating } = req.body;
 
-  let book = new Book({
-    title: req.body.title,
-    description: req.body.description,
-    author: req.body.author,
-    rating: req.body.rating,
-  })
+  const newBook = new Book({
+    title,
+    author,
+    description,
+    rating
+  });
   book.save().then(() => {
     res.redirect('/books')
   })
@@ -35,7 +33,7 @@ router.post('/', function (req, res, next) {
 
 //get prefilled 
 
-router.get('/books/edit', (req, res, next) => {
+router.get('/edit', (req, res, next) => {
   Book.findOne({ _id: req.query.book_id })
     .then((book) => {
       res.render("book-edit", { book });
@@ -47,7 +45,7 @@ router.get('/books/edit', (req, res, next) => {
 
 //post /book/edit/:id to update
 
-router.post('/books/edit', (req, res, next) => {
+router.post('/edit', (req, res, next) => {
   const { title, author, description, rating } = req.body;
   Book.update({ _id: req.query.book_id }, { $set: { title, author, description, rating } }, { new: true })
     .then((book) => {
@@ -57,7 +55,30 @@ router.post('/books/edit', (req, res, next) => {
       console.log(error);
     })
 });
-//
+
+
+//get 
+
+router.get('/delete', (req, res, next) => {
+  Book.findOneAndDelete({ _id: req.query.book_id })
+    .then((book) => {
+      res.redirect('/books');
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+})
+
+// router.get("/book/:bookID", (req, res, next) => {
+//   console.log("i am here")
+//   Book.findOne({ _id: req.params }).
+//     then((book) => {
+//       res.render("book-details", { book })
+//     }).catch((error) => {
+//       console.log("some thing is wrong with this route", error);
+//     })
+// })
+
 
 
 module.exports = router;

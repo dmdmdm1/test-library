@@ -15,3 +15,21 @@ a {
   background-color: grey;
   border-radius: 6px;
 }
+
+.delete {
+  margin-left: 20px;
+  color: #fff;
+  text-decoration: none;
+  padding: 2px 4px;
+  background-color: red;
+  border-radius: 6px;
+}
+
+.details {
+  margin-left: 20px;
+  color: #fff;
+  text-decoration: none;
+  padding: 2px 4px;
+  background-color: yellow;
+  border-radius: 6px;
+}
