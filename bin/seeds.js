@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Book = require('../models/book');
 
 const dbName = 'library-project';
-mongoose.connect(`mongodb://localhost/${dbName}`);
+mongoose.connect(`mongodb://localhost/${dbName}`, { useNewUrlParser: true });
 
 
 const books = [

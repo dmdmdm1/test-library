@@ -6,11 +6,11 @@ var logger = require('morgan');
 
 const mongoose = require('mongoose')
 const dbName = 'library-project';
-mongoose.connect(`mongodb://localhost/${dbName}`);
+mongoose.connect(`mongodb://localhost/${dbName}`, { useNewUrlParser: true });
 
-var indexRouter = require('./routes/index');
-var booksRouter = require('./routes/books');
-
+const indexRouter = require('./routes/index');
+const booksRouter = require('./routes/books');
+const authRouter = require('./routes/auth-routes');
 
 var app = express();
 
@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
+app.use('/auth', authRouter);
 
 
 
