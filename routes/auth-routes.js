@@ -1,17 +1,14 @@
 // routes/auth-routes.js
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 
 // User model
 const User = require("../models/user");
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
-const bcryptSalt = 10;
-
-router.get("/test", (req, res, next) => {
-  console.log("router for auth called")
-});
+const bcryptSaltRounds = 10;
 
 router.get("/signup", (req, res, next) => {
   res.render("auth/signup");
@@ -19,7 +16,6 @@ router.get("/signup", (req, res, next) => {
 
 router.post("/signup", (req, res, next) => {
   const { email, password } = req.body;
-
   if (email === "" || password === "") {
     res.render("auth/signup", { message: "Indicate email and password" });
     return;
@@ -32,7 +28,7 @@ router.post("/signup", (req, res, next) => {
         return;
       }
 
-      const salt = bcrypt.genSaltSync(bcryptSalt);
+      const salt = bcrypt.genSaltSync(bcryptSaltRounds);
       const hashPass = bcrypt.hashSync(password, salt);
 
       const newUser = new User({
@@ -52,5 +48,16 @@ router.post("/signup", (req, res, next) => {
       next(error)
     })
 });
+
+router.get("/login", (req, res, next) => {
+  res.render("auth/login");
+});
+
+router.post("/login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
 
 module.exports = router;
