@@ -9,8 +9,12 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
+router.get("/test", (req, res, next) => {
+  console.log("router for auth called")
+});
+
 router.get("/signup", (req, res, next) => {
-  res.render("/Users/dayanamick/Desktop/Ironhack_bootcamp/library-test/views/auth/signup.hbs");
+  res.render("auth/signup");
 });
 
 router.post("/signup", (req, res, next) => {
